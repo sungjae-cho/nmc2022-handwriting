@@ -2,9 +2,99 @@
 <html>
  <head>
   <title>Page Title</title>
+  <script>
+    let i_starting_digit = [];
+    let n_digits = 10;
+    for (let digit = 0; digit < n_digits; digit++) {
+      i_starting_digit[digit] = 0;
+    }
+    const n_total_images = 128;
+  </script>
  </head>
  <body>
-  <h1>This is a Heading</h1>
-  <p>This is a paragraph.</p>
+  <h1>A Framework to Develop Handwriting Neural Networks for Biological Investigation</h1>
+  <ul>
+    <li>Authors: Sungjae Cho, Taegon Kim (Korea Institute of Science and Technology)</li>
+    <li>Conference: Neuromatch Conference 2022 (NMC 2022)</li>
+    <li>Presentation: <a href="https://taco-lab.net/">Flash talk</a></li>
+  </ul>
+  <h2>Abstract</h2>
+  <p>
+    Since handwriting is an essential fine motor skill, which accompanies active interactions of sensation, movement, and conceptualization, the dynamics underlying writing actions have been studied to extract rich information related to complex motor control. Thus, handwriting tasks under controlled environments have been utilized to diagnose motor-related neurodegenerative diseases and developmental standardization. As a corresponding virtual system to writing agents, recent artificial neural networks successfully synthesize the shapes of handwritten characters but have overlooked the realistic dynamics of human motor programs for handwriting. We thus developed a framework to regenerate writing motor sequences under the dynamics within biologically-plausible ranges and to evaluate the quality of generating targeted characters. To train artificial neural networks, we collected dynamic handwriting trajectories of 10 digits through digitizer tablets with high spatiotemporal precision. We used a recurrent neural network that consists of the long short-term memory and gaussian mixtures. Once our model was trained within biologically-plausible ranges, it appeared to reproduce realistic digit shapes and stroke dynamics. To assess whether generated motor sequences draw targeted characters, we utilized dynamic time warping to compare these sequences to averaged human motor programs. We believe this work will be a stepping stone toward understanding biological motor control.
+  </p>
+  <h2>Framework</h2>
+  <h2>Results</h2>
+  <h3>Barycenters of motor programs in the validation dataset</h3>
+  <h3>Classification results measured by DTW from the validation barycenters</h3>
+  <h3>Generated handwriting sequences</h3>
+  <div class="slidecontainer">
+    <p id="message_slider_images"></p>
+    <script>
+      let msg ='#Images to disply: <span id="val_display_images"></span> (max: ' + n_total_images + ')'
+      document.getElementById("message_slider_images").innerHTML = msg;
+    </script>
+    <input type="range" min="1" max="100" value="1" class="slider" id="slider_images" style="width:100%">
+    <p>Image size (px): <span id="image_pixels"></span> (default: 128; max: 256)</p>
+    <input type="range" min="1" max="256" value="128" class="slider" id="slider_pixels" style="width:100%">
+  </div>
+  <p>
+   <button onclick="change_displayed_images()">Apply</button>
+  </p>
+  <p id="generated_digits"></p>
+
+  <script>
+    let slider = document.getElementById("slider_images");
+    let output = document.getElementById("val_display_images");
+    output.innerHTML = slider.value;
+    slider.oninput = function() {
+      output.innerHTML = this.value;
+    }
+    let slider_pixels = document.getElementById("slider_pixels");
+    let output_pixels = document.getElementById("image_pixels");
+    output_pixels.innerHTML = slider_pixels.value;
+    slider_pixels.oninput = function() {
+      output_pixels.innerHTML = this.value;
+    }
+  </script>
+  <script>
+    function pad(num, size) {
+      num = num.toString();
+      while (num.length < size) num = "0" + num;
+      return num;
+    }
+    function generate_images(digit) {
+      let text = "";
+      let img_src = "";
+      let i_digit = 0;
+      let n_images = Number(document.getElementById("slider_images").value);
+      let n_pixels = Number(document.getElementById("slider_pixels").value);
+      text += "<button onclick='next_images(" + digit + ")'>Next image(s)</button><br>";
+      for (let i = i_starting_digit[digit]; i < i_starting_digit[digit] + n_images; i++) {
+        i_digit = i % n_total_images;
+        img_src = "images/" + digit + "-" + pad(i_digit, 3) + ".gif";
+        text += "<img src='" + img_src + "' style='width:" + n_pixels +"px;margin:5px'>" + "</img>";
+      }
+
+      return text;
+    }
+    function change_displayed_images() {
+      let text = "";
+      for (let digit = 0; digit < n_digits; digit++) {
+        text += "<hr>";
+        text += "<div id='digit" + digit + "'>";
+        text += generate_images(digit);
+        text += "</div>";
+      }
+      document.getElementById("generated_digits").innerHTML = text;
+    }
+    change_displayed_images()
+  </script>
+  <script>
+    function next_images(digit) {
+      let n_images = Number(document.getElementById("slider_images").value);
+      i_starting_digit[digit] += n_images;
+      document.getElementById("digit"+digit).innerHTML = generate_images(digit);
+    }
+  </script>
  </body>
 </html>
