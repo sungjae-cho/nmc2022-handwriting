@@ -10,6 +10,82 @@
     }
     const n_total_images = 128;
   </script>
+  <style>
+    .button {
+      background-color: #0974ff;
+      color: white;
+      border: 1px solid #0974ff;
+      border-radius: 5px;
+      font-size: middle;
+      padding: 5px 10px;
+    }
+
+    .button:hover {
+      background-color: white;
+      color: black;
+
+    }
+
+    .slidecontainer {
+      width: 100%; /* Width of the outside container */
+    }
+
+    /* The slider itself */
+    .slider {
+     -webkit-appearance: none;  /* Override default CSS styles */
+     appearance: none;
+     width: 100%; /* Full-width */
+     height: 10px; /* Specified height */
+     border-radius: 5px;
+     background: #d3d3d3; /* Grey background */
+     outline: none; /* Remove outline */
+     opacity: 0.8; /* Set transparency (for mouse-over effects on hover) */
+     -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+     transition: opacity .2s;
+    }
+
+    /* Mouse-over effects */
+    .slider:hover {
+      opacity: 1; /* Fully shown on mouse-over */
+    }
+
+
+    /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none; /* Override default look */
+      appearance: none;
+      width: 20px; /* Set a specific slider handle width */
+      height: 20px; /* Slider handle height */
+      border-radius: 50%; /* Round cursor */
+      background: #0974ff; /* Blue background */
+      cursor: pointer; /* Cursor on hover */
+    }
+
+    .slider::-moz-range-thumb {
+      width: 20px; /* Set a specific slider handle width */
+      height: 20px; /* Slider handle height */
+      border-radius: 50%; /* Round cursor */
+      background: #008CBA; /* Blue background */
+      cursor: pointer; /* Cursor on hover */
+    }
+
+    table {
+      width: 100%;
+      cellpadding: 1;
+    }
+
+    table, td, th {
+      border: 1px solid;
+      border-collapse: collapse;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    input {
+      width: 15px;
+      height: 15px;
+    }
+  </style>
  </head>
  <body>
   <h1>A Framework to Develop Handwriting Neural Networks for Biological Investigation</h1>
@@ -27,6 +103,36 @@
   <h3>Barycenters of motor programs in the validation dataset</h3>
   <h3>Classification results measured by DTW from the validation barycenters</h3>
   <h3>Generated handwriting sequences</h3>
+  <table>
+    <tbody>
+      <tr>
+        <td>Digit</td>
+        <td>0</td>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+        <td>7</td>
+        <td>8</td>
+        <td>9</td>
+      </tr>
+      <tr>
+        <td>Show</td>
+        <td><input type="checkbox" id="show_0" checked></td>
+        <td><input type="checkbox" id="show_1" checked></td>
+        <td><input type="checkbox" id="show_2" checked></td>
+        <td><input type="checkbox" id="show_3" checked></td>
+        <td><input type="checkbox" id="show_4" checked></td>
+        <td><input type="checkbox" id="show_5" checked></td>
+        <td><input type="checkbox" id="show_6" checked></td>
+        <td><input type="checkbox" id="show_7" checked></td>
+        <td><input type="checkbox" id="show_8" checked></td>
+        <td><input type="checkbox" id="show_9" checked></td>
+      </tr>
+    </tbody>
+  </table>
   <div class="slidecontainer">
     <p id="message_slider_images"></p>
     <script>
@@ -38,7 +144,7 @@
     <input type="range" min="1" max="256" value="128" class="slider" id="slider_pixels" style="width:100%">
   </div>
   <p>
-   <button onclick="change_displayed_images()">Apply</button>
+   <button class="button" onclick="change_displayed_images()">Apply</button>
   </p>
   <p id="generated_digits"></p>
 
@@ -68,7 +174,8 @@
       let i_digit = 0;
       let n_images = Number(document.getElementById("slider_images").value);
       let n_pixels = Number(document.getElementById("slider_pixels").value);
-      text += "<button onclick='next_images(" + digit + ")'>Next image(s)</button><br>";
+      text += "<h4>Digit " + digit + "</h4>";
+      text += "<button class='button' onclick='next_images(" + digit + ")'>Next image(s)</button><br><br>";
       for (let i = i_starting_digit[digit]; i < i_starting_digit[digit] + n_images; i++) {
         i_digit = i % n_total_images;
         img_src = "images/" + digit + "-" + pad(i_digit, 3) + ".gif";
@@ -79,11 +186,16 @@
     }
     function change_displayed_images() {
       let text = "";
+      var checkBox;
       for (let digit = 0; digit < n_digits; digit++) {
-        text += "<hr>";
-        text += "<div id='digit" + digit + "'>";
-        text += generate_images(digit);
-        text += "</div>";
+
+        checkBox = document.getElementById("show_" + digit);
+        if (checkBox.checked == true){
+          text += "<hr>";
+          text += "<div id='digit" + digit + "'>";
+          text += generate_images(digit);
+          text += "</div>";
+        }
       }
       document.getElementById("generated_digits").innerHTML = text;
     }
