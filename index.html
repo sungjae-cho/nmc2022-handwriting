@@ -103,8 +103,69 @@
   </p>
   <h2>Framework</h2>
   <h2>Results</h2>
-  <h3>Barycenters of motor programs in the validation dataset</h3>
-  <h3>Classification results measured by DTW from the validation barycenters</h3>
+  <h3>The centroids of motor programs in the validation dataset</h3>
+
+  <img src="centroids/barycenter-img-digit-0-mp-0.gif" style="width:64px;margin:5px">
+  <img src="centroids/barycenter-img-digit-1-mp-0.gif" style="width:64px;margin:5px">
+  <img src="centroids/barycenter-img-digit-2-mp-0.gif" style="width:64px;margin:5px">
+  <img src="centroids/barycenter-img-digit-3-mp-0.gif" style="width:64px;margin:5px">
+  <img src="centroids/barycenter-img-digit-4-mp-0.gif" style="width:64px;margin:5px">
+  <img src="centroids/barycenter-img-digit-5-mp-0.gif" style="width:64px;margin:5px">
+  <img src="centroids/barycenter-img-digit-6-mp-0.gif" style="width:64px;margin:5px">
+  <img src="centroids/barycenter-img-digit-7-mp-0.gif" style="width:64px;margin:5px">
+  <img src="centroids/barycenter-img-digit-8-mp-0.gif" style="width:64px;margin:5px">
+  <img src="centroids/barycenter-img-digit-9-mp-0.gif" style="width:64px;margin:5px">
+  <img src="centroids/barycenter-img-digit-9-mp-1.gif" style="width:64px;margin:5px">
+
+  <h3>Classification accuracy measured by the Soft-DTW nearest centroid classifier</h3>
+
+  <table>
+    <tbody>
+      <tr>
+        <th>Digit</th>
+        <th>0</th>
+        <th>1</th>
+        <th>2</th>
+        <th>3</th>
+        <th>4</th>
+        <th>5</th>
+        <th>6</th>
+        <th>7</th>
+        <th>8</th>
+        <th>9</th>
+        <th>Total</th>
+      </tr>
+      <tr>
+        <th>Human</th>
+        <td>1.00</td>
+        <td>1.00</td>
+        <td>1.00</td>
+        <td>0.98</td>
+        <td>0.99</td>
+        <td>1.00</td>
+        <td>1.00</td>
+        <td>1.00</td>
+        <td>1.00</td>
+        <td>1.00</td>
+        <td>0.997</td>
+      </tr>
+      <tr>
+        <th>Model</th>
+        <td>1.00</td>
+        <td>0.99</td>
+        <td>1.00</td>
+        <td>0.99</td>
+        <td>0.93</td>
+        <td>0.99</td>
+        <td>0.98</td>
+        <td>0.98</td>
+        <td>1.00</td>
+        <td>1.00</td>
+        <td>0.988</td>
+      </tr>
+    </tbody>
+  </table>
+
   <h3>Generated handwriting sequences</h3>
   <table>
     <tbody>
